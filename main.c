@@ -23,6 +23,39 @@ void create_map(int x, int y, char map[x][y]) {
             }
         }
     }
+    for (int i = 0; i < x; i++) { // Asteroid tail Draw direction code
+        for (int j = 0; j < y; j++) {
+            if (map[i][j] == '0') {
+                int r = rand() % (4); // Where asteroid is moving, random for now
+
+                if (r == 0 && i + 1 < x) { // if asteroid tail should go down
+                    map[i+1][j] = '|';
+                    if (i + 2 < x) {
+                        map[i+2][j] = '|';
+                    }
+                } else if (r == 1 && j + 1 < y) { // if asteroid tail should go right
+                    map[i][j+1] = '-';
+                    if (j + 2 < y) {
+                        map[i][j+2] = '-';
+                    }
+                } else if (r == 2 && i - 1 >=0) { // if asteroid tail should go up
+                    map[i-1][j] = '|';
+                    if (i - 2 >=0) {
+                        map[i-2][j] = '|';
+                    }
+                } else if (r == 3 && j - 1 >=0) { // if asteroid tail should go left
+                    map[i][j-1] = '-';
+                    if (j - 2 >= 0) {
+                        map[i][j-2] = '-';
+                    }
+                }
+
+                //if (r == 1 && j + 2 < y) map[i][j+1] = '-'; map[i][j+2] = '-';
+                //if (r == 2 && i - 1 >=0) map[i-1][j] = '|'; map[i-1][j] = '|';
+                //if (r == 3 && j - 2 >=0) map[i][j-1] = '-'; map[i][j-2] = '-';
+            }
+        }
+    }
 }
 
 void display_map(int x, int y, char map[x][y]) {
