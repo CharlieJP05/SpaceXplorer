@@ -102,22 +102,22 @@ void spawn_asteroid(Map *map) {
             int pos = rand() % (y);
             if (dir == 0) {// asteroid should spawn from the bottom
                 printf("pos:bottom -> %d:%d\n",pos,y);
-                map->world[pos][y-1].asteroid.direction = 0;
+                map->world[pos][y-1].asteroid.direction = dir;
                 map->world[pos][y-1].contains = 1;
             } else { // asteroid should spawn from the top
                 printf("pos:top -> %d:%d\n",pos,0);
-                map->world[pos][0].asteroid.direction = 0;
+                map->world[pos][0].asteroid.direction = dir;
                 map->world[pos][0].contains = 1;
             }
         } else {
             int pos = rand() % (x);
             if (dir == 1) {// asteroid should spawn from the left
                 printf("left:pos -> %d:%d\n",0,pos);
-                map->world[0][pos].asteroid.direction = 0;
+                map->world[0][pos].asteroid.direction = dir;
                 map->world[0][pos].contains = 1;
             } else {// asteroid should spawn from the right
                 printf("right:pos -> %d:%d\n",x,pos);
-                map->world[x-1][pos].asteroid.direction = 0;
+                map->world[x-1][pos].asteroid.direction = dir;
                 map->world[x-1][pos].contains = 1;
             }
         }
@@ -126,11 +126,13 @@ void spawn_asteroid(Map *map) {
 }
 
 void move_asteroid(Map *map,char prbuff[]) {
+    Map tempMap;
+    memcpy(&tempMap,map,sizeof(Map));
     int x = map->worldSize;
     int y = map->worldSize;
     for (int i = 0; i < x; i++) {
         for (int j = 0; j < y; j++) {
-            switch (map->world[i][j].contains) {
+            switch (tempMap.world[i][j].contains) {
                 case 0://null
                     break;
                 case 1://asteroid
