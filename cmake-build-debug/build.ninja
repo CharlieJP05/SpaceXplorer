@@ -55,8 +55,8 @@ build CMakeFiles/SpaceXplorer.dir/main.c.obj: C_COMPILER__SpaceXplorer_unscanned
   OBJECT_DIR = CMakeFiles\SpaceXplorer.dir
   OBJECT_FILE_DIR = CMakeFiles\SpaceXplorer.dir
 
-build CMakeFiles/SpaceXplorer.dir/display.c.obj: C_COMPILER__SpaceXplorer_unscanned_Debug E$:/Git/SpaceXplorer/display.c || cmake_object_order_depends_target_SpaceXplorer
-  DEP_FILE = CMakeFiles\SpaceXplorer.dir\display.c.obj.d
+build CMakeFiles/SpaceXplorer.dir/funcs.c.obj: C_COMPILER__SpaceXplorer_unscanned_Debug E$:/Git/SpaceXplorer/funcs.c || cmake_object_order_depends_target_SpaceXplorer
+  DEP_FILE = CMakeFiles\SpaceXplorer.dir\funcs.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\SpaceXplorer.dir
   OBJECT_FILE_DIR = CMakeFiles\SpaceXplorer.dir
@@ -69,7 +69,7 @@ build CMakeFiles/SpaceXplorer.dir/display.c.obj: C_COMPILER__SpaceXplorer_unscan
 #############################################
 # Link the executable SpaceXplorer.exe
 
-build SpaceXplorer.exe: C_EXECUTABLE_LINKER__SpaceXplorer_Debug CMakeFiles/SpaceXplorer.dir/main.c.obj CMakeFiles/SpaceXplorer.dir/display.c.obj
+build SpaceXplorer.exe: C_EXECUTABLE_LINKER__SpaceXplorer_Debug CMakeFiles/SpaceXplorer.dir/main.c.obj CMakeFiles/SpaceXplorer.dir/funcs.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\SpaceXplorer.dir
