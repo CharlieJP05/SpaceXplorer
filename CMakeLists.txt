@@ -6,4 +6,6 @@ set(CMAKE_C_STANDARD 11)
 add_executable(SpaceXplorer main.c
         structs.h
         funcs.c
-        funcs.h)
+        funcs.h
+        player.c
+        player.h)

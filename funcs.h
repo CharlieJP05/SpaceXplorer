@@ -14,7 +14,12 @@ void display_map(Map *map,char prbuff[]);
 
 void spawn_asteroid(Map *map);
 
-void move_asteroid(Map *map,char prbuff[]);
+void update(Map *map,char prbuff[],char action);
 
+int check_collision(Map *map, int i, int j);
+
+void hide_cursor();
+
+void move_cursor_top_left();
 
 #endif //FUNCS_H

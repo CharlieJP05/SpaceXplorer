@@ -11,7 +11,8 @@ typedef struct {
     char symbol;
 }Scrap;
 typedef struct {
-    int contains; //0=null 1=asteroid 2=scrap 3=player
+    int contains; //0=null 1=asteroid 2=scrap 3=player 4=asteroid and scrap 5= player and asteroid
+    //char contains[6]; //string binary, 0=no 1=yes, up right down left scrap player
     Player player;
     Asteroid asteroid;
     Scrap scrap;
