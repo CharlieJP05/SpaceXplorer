@@ -7,5 +7,4 @@ add_executable(SpaceXplorer main.c
         structs.h
         funcs.c
         funcs.h
-        player.c
-        player.h)
+        structs.c)

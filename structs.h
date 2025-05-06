@@ -1,24 +1,61 @@
-typedef struct {
-    int direction; // default value
-    char symbol;
-}Asteroid;
+//
+// Created by charl on 06/05/2025.
+//
+
+#ifndef STRUCTS_H
+#define STRUCTS_H
+#include "funcs.h"
+#define ASTEROID_SYM_UP '^'
+#define ASTEROID_SYM_DOWN 'v'
+#define ASTEROID_SYM_LEFT '<'
+#define ASTEROID_SYM_RIGHT '>'
+#define SCRAP_SYM 'X'
+#define PLAYER_SYM 219
+#define CLEAR ' '
+
+
 typedef struct {
     int lives;
     int scrap;
-    char symbol;
 }Player;
 typedef struct {
-    char symbol;
-}Scrap;
-typedef struct {
-    int contains; //0=null 1=asteroid 2=scrap 3=player 4=asteroid and scrap 5= player and asteroid
-    //char contains[6]; //string binary, 0=no 1=yes, up right down left scrap player
-    Player player;
-    Asteroid asteroid;
-    Scrap scrap;
+    //int contains; //0=null 1=asteroid 2=scrap 3=player 4=asteroidscrap 5= playerasteroid 6=playerscrap
+    unsigned char contains; // 0b000000 <->  0 1 2 3 up down left right       4 scrap 5 unused      0b543210
     char symbol;
 }Space;
 typedef struct {
     int worldSize;
     Space world[18][18];
+    Player player;
 }Map;
+
+//update
+void clear_space(Map *map, int i, int j);
+void init_map(Map *map,int worldSize);
+void update_map(Map *map);
+void update_symbols(Map *map);
+void move(Map *map,char prbuff[],char action);
+//spaces
+void add_asteroid(Map *map, int i, int j,int direction);
+void add_scrap(Map *map, int i, int j);
+void add_player(Map *map, int i, int j);
+void remove_asteroid(Map *map, int i, int j,int direction);
+void remove_asteroid_all(Map *map, int i, int j);
+void remove_scrap(Map *map, int i, int j);
+void remove_player(Map *map, int i, int j);
+int has_asteroid_dir(Map *map, int i, int j,int direction);
+int has_asteroid(Map *map, int i, int j);
+int has_scrap(Map *map, int i, int j);
+int has_player(Map *map, int i, int j);
+//symbols
+char get_symbol(Map *map, int i, int j);
+//player
+void increase_health(Map *map);
+void decrease_health(Map *map);
+void set_health(Map *map, int health);
+int get_health(Map *map);
+void increase_scrap(Map *map);
+void decrease_scrap(Map *map);
+void set_scrap(Map *map, int scrap);
+int get_scrap(Map *map);
+#endif //STRUCTS_H

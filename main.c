@@ -11,12 +11,12 @@ int main(void) {
     srand((unsigned)time(NULL)); // allows for random to be used
     hide_cursor(); // hide cursor
     Map map;
-    init_map(&map,18); // init map
+    //init_map(&map,18); // init map
     char prbuff[2048] = {0};
     create_map(&map); // create map
     //display_map(&map,"None"); // show map
     spawn_asteroid(&map);
-    update(&map, prbuff, 0);
+    //update(&map, prbuff, 0);
     for (int i = 0; i < 1000; i++) {//main loop
         //Input
         printf("Action: \n");
@@ -38,7 +38,7 @@ int main(void) {
 
         // Logic
         spawn_asteroid(&map);
-        update(&map, prbuff, input); // input might be 0 if timeout
+        //update(&map, prbuff, input); // input might be 0 if timeout
 
         // Draw funcs
         display_map(&map, prbuff);
