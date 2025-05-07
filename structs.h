@@ -4,7 +4,6 @@
 
 #ifndef STRUCTS_H
 #define STRUCTS_H
-#include "funcs.h"
 #define ASTEROID_SYM_UP '^'
 #define ASTEROID_SYM_DOWN 'v'
 #define ASTEROID_SYM_LEFT '<'

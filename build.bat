@@ -1,0 +1,1 @@
+gcc.exe E:\Git\SpaceXplorer\main.c E:\Git\SpaceXplorer\funcs.c E:\Git\SpaceXplorer\structs.c -o E:\Git\SpaceXplorer\SpaceXplorer.exe

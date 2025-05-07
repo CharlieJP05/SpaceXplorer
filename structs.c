@@ -50,28 +50,30 @@ void update_symbols(Map *map) {
     for (int j = 0; j < map->worldSize; j++) {
       if ((map->world[i][j].contains & (map->world[i][j].contains - 1)) != 0){// if contains more than one thing
         map->world[i][j].symbol = '?'; //TEMPORARY TODO
-        }
-      if (has_asteroid(map,i,j)){
-        if (has_asteroid_dir(map,i,j,0)){
-          map->world[i][j].symbol = ASTEROID_SYM_UP;
-        } else if (has_asteroid_dir(map,i,j,1)){
-          map->world[i][j].symbol = ASTEROID_SYM_DOWN;
-        } else if (has_asteroid_dir(map,i,j,2)){
-          map->world[i][j].symbol = ASTEROID_SYM_LEFT;
-        } else if (has_asteroid_dir(map,i,j,3)){
-          map->world[i][j].symbol = ASTEROID_SYM_RIGHT;
+        } else if (has_asteroid(map,i,j)){
+          if (has_asteroid_dir(map,i,j,0)){
+            map->world[i][j].symbol = ASTEROID_SYM_UP;
+          } else if (has_asteroid_dir(map,i,j,1)){
+            map->world[i][j].symbol = ASTEROID_SYM_RIGHT;
+          } else if (has_asteroid_dir(map,i,j,2)){
+            map->world[i][j].symbol = ASTEROID_SYM_DOWN;
+          } else if (has_asteroid_dir(map,i,j,3)){
+            map->world[i][j].symbol = ASTEROID_SYM_LEFT;
+          } else {
+            map->world[i][j].symbol = '?';
+          }
+        } else if (has_scrap(map,i,j)){
+          map->world[i][j].symbol = SCRAP_SYM;
+        } else if (has_player(map,i,j)){
+          map->world[i][j].symbol = PLAYER_SYM;
         } else {
-          map->world[i][j].symbol = '?';
+          map->world[i][j].symbol = ' ';
         }
-      } else if (has_scrap(map,i,j)){
-        map->world[i][j].symbol = SCRAP_SYM;
-      } else if (has_player(map,i,j)){
-        map->world[i][j].symbol = PLAYER_SYM;
-      } else {
-        map->world[i][j].symbol = ' ';
-      }
     }
   }
+}
+void change_symbol(Map *map,int i,int j,char symbol) {
+  map->world[i][j].symbol = symbol;
 }
 
 void move(Map *map,char prbuff[],char action) {
@@ -83,34 +85,35 @@ void move(Map *map,char prbuff[],char action) {
         for (int j = 0; j < y; j++) {
           if (has_player(&tempMap,i,j)) {
             if (action == 'w') {
-              add_player(map,i-1,j);
-              remove_player(map,i,j);
-            } else if (action == 'a') {
               add_player(map,i,j-1);
               remove_player(map,i,j);
+              strcat(prbuff,"You hit an asteroid!\n");
+            } else if (action == 'a') {
+              add_player(map,i-1,j);
+              remove_player(map,i,j);
             } else if (action == 's') {
-              add_player(map,i+1,j);
+              add_player(map,i,j+1);
               remove_player(map,i,j);
             } else if (action == 'd') {
-              add_player(map,i,j+1);
+              add_player(map,i+1,j);
               remove_player(map,i,j);
             }
           }
           if (has_asteroid(&tempMap,i,j)) {
             if (has_asteroid_dir(&tempMap,i,j,0)) {
-              add_asteroid(map,i-1,j,0);
+              add_asteroid(map,i,j-1,0);
               remove_asteroid(map,i,j,0);
             }
             if (has_asteroid_dir(&tempMap,i,j,1)) {
-              add_asteroid(map,i,j-1,1);
+              add_asteroid(map,i+1,j,1);
               remove_asteroid(map,i,j,1);
             }
             if (has_asteroid_dir(&tempMap,i,j,2)) {
-               add_asteroid(map,i+1,j,2);
+               add_asteroid(map,i,j+1,2);
                remove_asteroid(map,i,j,2);
             }
             if (has_asteroid_dir(&tempMap,i,j,3)) {
-               add_asteroid(map,i,j+1,3);
+               add_asteroid(map,i-1,j,3);
                remove_asteroid(map,i,j,3);
             }
           }
@@ -153,7 +156,9 @@ int has_player(Map *map, int i, int j) {
     return (map->world[i][j].contains & (1 << 5)) != 0;
 }
 //symbols
-char get_symbol(Map *map, int i, int j) {}
+char get_symbol(Map *map, int i, int j) {
+  return map->world[i][j].symbol;
+}
 //player
 void increase_health(Map *map) {
   map->player.lives++;

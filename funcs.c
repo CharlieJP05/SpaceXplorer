@@ -22,14 +22,14 @@ void create_map(Map *map) {
                 //do nothing, leave empty
             } else if (r < 95) {
                 int a = rand() % (4);
-                ///add_asteroid(map,i,j,a);
+                add_asteroid(map,i,j,a);
             } else {
-                ///add_scrap(map,i,j);
+                add_scrap(map,i,j);
             }
         }
     }
-    ///clear_space(map,x/2,y/2);
-    ///add_player(map,x/2,y/2);
+    clear_space(map,x/2,y/2);
+    add_player(map,x/2,y/2);
 }
 
 void display_map(Map *map,char prbuff[]) {
@@ -43,10 +43,10 @@ void display_map(Map *map,char prbuff[]) {
     strcat(buffer,"||====================================||\n");
     for (int j = 0; j < y; j++) { // iterate through
         strcat(buffer,"||"); // start line
+        update_symbols(map);
         for (int i = 0; i < x; i++) {
             char temp[2];                 // Temporary string for one char + null terminator
-            ///update_symbols(map);
-            ///temp[0] = get_symbol(map,i,j); // get symbol from map
+            temp[0] = get_symbol(map,i,j); // get symbol from map
             temp[1] = '\0';               // Null terminate
             strcat(buffer, temp);// print with type character
             strcat(buffer," ");
@@ -75,16 +75,16 @@ void spawn_asteroid(Map *map) {
         if (dir == 0 || dir == 2) {
             int pos = rand() % (y);
             if (dir == 0) {// asteroid should spawn from the bottom
-                ///add_asteroid(map,pos,y-1,dir);
+                add_asteroid(map,pos,y-1,dir);
             } else { // asteroid should spawn from the top
-                ///add_asteroid(map,pos,0,dir);
+                add_asteroid(map,pos,0,dir);
             }
         } else {
             int pos = rand() % (x);
             if (dir == 1) {// asteroid should spawn from the left
-                ///add_asteroid(map,0,pos,dir);
+                add_asteroid(map,0,pos,dir);
             } else {// asteroid should spawn from the right
-                ///add_asteroid(map,x-1,pos,dir);
+                add_asteroid(map,x-1,pos,dir);
             }
         }
     }

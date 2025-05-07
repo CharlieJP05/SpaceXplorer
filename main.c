@@ -4,19 +4,19 @@
 #include <string.h>
 #include <time.h>
 #include <windows.h>
-#include "funcs.c"
+#include "funcs.h"
+#include "structs.h"
 
 
 int main(void) {
     srand((unsigned)time(NULL)); // allows for random to be used
     hide_cursor(); // hide cursor
     Map map;
-    //init_map(&map,18); // init map
+    init_map(&map,18); // init map
     char prbuff[2048] = {0};
     create_map(&map); // create map
-    //display_map(&map,"None"); // show map
-    spawn_asteroid(&map);
-    //update(&map, prbuff, 0);
+    display_map(&map,"None"); // show map
+    spawn_asteroid(&map); 
     for (int i = 0; i < 1000; i++) {//main loop
         //Input
         printf("Action: \n");
@@ -38,7 +38,7 @@ int main(void) {
 
         // Logic
         spawn_asteroid(&map);
-        //update(&map, prbuff, input); // input might be 0 if timeout
+        move(&map, prbuff, input);
 
         // Draw funcs
         display_map(&map, prbuff);
