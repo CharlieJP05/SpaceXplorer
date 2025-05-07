@@ -9,7 +9,7 @@
 
 void create_map(Map *map);
 
-void display_map(Map *map,char prbuff[]);
+void display_map(Map *map,char prbuff[],int print);
 
 void spawn_asteroid(Map *map);
 

@@ -9,7 +9,6 @@
 #include <time.h>
 #include <windows.h>
 #include "funcs.h"
-#include "structs.h"
 
 void create_map(Map *map) {
     int x = map->worldSize;
@@ -32,10 +31,11 @@ void create_map(Map *map) {
     add_player(map,x/2,y/2);
 }
 
-void display_map(Map *map,char prbuff[]) {
+void display_map(Map *map,char prbuff[],int print) {
     //clear_screen();
     move_cursor_top_left();
     //system("cls");
+    update_symbols(map,prbuff,print);
     int x = map->worldSize;//TODO
     int y = map->worldSize;
     int seconds = (int)time(NULL);
@@ -43,7 +43,6 @@ void display_map(Map *map,char prbuff[]) {
     strcat(buffer,"||====================================||\n");
     for (int j = 0; j < y; j++) { // iterate through
         strcat(buffer,"||"); // start line
-        update_symbols(map);
         for (int i = 0; i < x; i++) {
             char temp[2];                 // Temporary string for one char + null terminator
             temp[0] = get_symbol(map,i,j); // get symbol from map
@@ -54,9 +53,12 @@ void display_map(Map *map,char prbuff[]) {
         strcat(buffer,"||\n"); // new line at end of line
     }
     strcat(buffer,"||====================================||\n");
-    strcat(buffer,"||");
     strcat(buffer,prbuff);
-    strcat(buffer,"\n");
+    strcat(buffer,"                    \n");
+    strcat(buffer,"                    \n");
+    strcat(buffer,"                    \n");
+    strcat(buffer,"                    \n");
+
     printf("%s", buffer);
 }
 

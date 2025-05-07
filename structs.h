@@ -32,7 +32,8 @@ typedef struct {
 void clear_space(Map *map, int i, int j);
 void init_map(Map *map,int worldSize);
 void update_map(Map *map);
-void update_symbols(Map *map);
+void update_symbols(Map *map,char prbuff[],int print);
+char show_overlap(Map *map, int i, int j,char prbuff[],int count);
 void move(Map *map,char prbuff[],char action);
 //spaces
 void add_asteroid(Map *map, int i, int j,int direction);

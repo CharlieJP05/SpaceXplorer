@@ -4,7 +4,6 @@
 #include <string.h>
 #include <time.h>
 #include <windows.h>
-#include "funcs.h"
 #include "structs.h"
 
 void clear_space(Map *map, int i, int j) {
@@ -45,11 +44,48 @@ void update_map(Map *map) {
   }
 }
 
-void update_symbols(Map *map) {
+char show_overlap(Map *map, int i, int j,char prbuff[],int count) {
+  char str[20*20];
+  char digit = '0' + count;
+  sprintf(str,"%d",count);
+  strcat(prbuff,str);
+  strcat(prbuff,": ");
+  if (has_asteroid_dir(map,i,j,0)) {
+    strcat(prbuff,"^");
+    strcat(prbuff," ");
+  }
+  if (has_asteroid_dir(map,i,j,1)) {
+    strcat(prbuff,">");
+    strcat(prbuff," ");
+  }
+  if (has_asteroid_dir(map,i,j,2)) {
+    strcat(prbuff,"v");
+    strcat(prbuff," ");
+  }
+  if (has_asteroid_dir(map,i,j,3)) {
+    strcat(prbuff,"<");
+    strcat(prbuff," ");
+  }
+  if (has_scrap(map,i,j)) {
+    strcat(prbuff,"X");
+    strcat(prbuff," ");
+  }
+  if (has_player(map,i,j)) {
+    strcat(prbuff,"P");
+    strcat(prbuff," ");
+  }
+  strcat(prbuff,"\n");
+  return digit;
+}
+void update_symbols(Map *map,char prbuff[],int print) {
+  int count = 0;
   for (int i = 0; i < map->worldSize; i++) {
     for (int j = 0; j < map->worldSize; j++) {
       if ((map->world[i][j].contains & (map->world[i][j].contains - 1)) != 0){// if contains more than one thing
-        map->world[i][j].symbol = '?'; //TEMPORARY TODO
+        count++;
+        char output = show_overlap(map, i, j,prbuff,count);
+        if (!print) {output = ' ';}
+        map->world[i][j].symbol = output;
         } else if (has_asteroid(map,i,j)){
           if (has_asteroid_dir(map,i,j,0)){
             map->world[i][j].symbol = ASTEROID_SYM_UP;
@@ -76,6 +112,25 @@ void change_symbol(Map *map,int i,int j,char symbol) {
   map->world[i][j].symbol = symbol;
 }
 
+void check_collision(Map *map) {
+  for (int i = 0; i < map->worldSize; i++) {
+    for (int j = 0; j < map->worldSize; j++) {
+      if (has_player(map,i,j)) {
+        if (has_asteroid(map,i,j)) {
+          int damage = has_asteroid_dir(map,i,j,0) + has_asteroid_dir(map,i,j,1) + has_asteroid_dir(map,i,j,2) + has_asteroid_dir(map,i,j,3);
+          remove_asteroid_all(map,i,j);
+          set_health(map,get_health(map)-damage);
+        }
+        if (has_scrap(map,i,j)) {
+          increase_scrap(map);
+          remove_scrap(map,i,j);
+        }
+      }
+    }
+  }
+}
+
+
 void move(Map *map,char prbuff[],char action) {
     Map tempMap;
     memcpy(&tempMap,map,sizeof(Map));
@@ -87,7 +142,6 @@ void move(Map *map,char prbuff[],char action) {
             if (action == 'w') {
               add_player(map,i,j-1);
               remove_player(map,i,j);
-              strcat(prbuff,"You hit an asteroid!\n");
             } else if (action == 'a') {
               add_player(map,i-1,j);
               remove_player(map,i,j);
@@ -120,44 +174,84 @@ void move(Map *map,char prbuff[],char action) {
         }
     }
 }
-
+int in_map(Map *map,int i,int j) {
+  if (i < 0 || i >= map->worldSize || j < 0 || j >= map->worldSize) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
 //asteroids
 void add_asteroid(Map *map, int i, int j,int direction) {
+    if (in_map(map, i, j)){
     map->world[i][j].contains |= (1 << direction);
+    }
 }
 void add_scrap(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
     map->world[i][j].contains |= (1 << 4);
+    }
 }
 void add_player(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
     map->world[i][j].contains |= (1 << 5);
+    }
 }
 void remove_asteroid(Map *map, int i, int j,int direction) {
+    if (in_map(map, i, j)){
     map->world[i][j].contains &= ~(1 << direction);
+    }
 }
 void remove_asteroid_all(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
   map->world[i][j].contains &= ~(0b001111);
+  }
 }
 void remove_scrap(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
     map->world[i][j].contains &= ~(1 << 4);
+    }
 }
 void remove_player(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
     map->world[i][j].contains &= ~(1 << 5);
+    }
 }
 int has_asteroid_dir(Map *map, int i, int j,int direction) {
+    if (in_map(map, i, j)){
     return (map->world[i][j].contains & (1 << direction)) != 0;
+    } else {
+    return 0;
+    }
 }
 int has_asteroid(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
   return (map->world[i][j].contains & 0b001111);
+  } else {
+  return 0;
+  }
 }
 int has_scrap(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
     return (map->world[i][j].contains & (1 << 4)) != 0;
+    } else {
+    return 0;
+    }
 }
 int has_player(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
     return (map->world[i][j].contains & (1 << 5)) != 0;
+    } else {
+    return 0;
+    }
 }
 //symbols
 char get_symbol(Map *map, int i, int j) {
+    if (in_map(map, i, j)){
   return map->world[i][j].symbol;
+  } else {
+  return 0;
+  }
 }
 //player
 void increase_health(Map *map) {
