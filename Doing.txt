@@ -1,0 +1,13 @@
+currently
+making scap be a ⚙
+add better collisions
+add switching to show multiple things in same box
+
+Referecnces:
+strchr() -> https://www.tutorialspoint.com/c_standard_library/c_function_strchr.htm
+memcpy() -> https://www.geeksforgeeks.org/c-program-to-copy-all-the-elements-of-one-array-to-another-array/
+buffer -> https://www.geeksforgeeks.org/buffer-in-c-programming/
+buffer2 unused -> https://www.geeksforgeeks.org/snprintf-c-library/
+
+
+gcc.exe E:\Git\SpaceXplorer\main.c E:\Git\SpaceXplorer\funcs.c E:\Git\SpaceXplorer\structs.c -o E:\Git\SpaceXplorer\SpaceXplorer.exe

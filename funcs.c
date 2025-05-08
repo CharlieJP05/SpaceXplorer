@@ -17,11 +17,8 @@ void create_map(Map *map) {
         for (int j = 0; j < y; j++) {
             int r = rand() % (100+1); // choose what each space should be to start
             //int r = 50;
-            if (r < 90) {
+            if (r < 100-map->scrapCount) {
                 //do nothing, leave empty
-            } else if (r < 95) {
-                int a = rand() % (4);
-                add_asteroid(map,i,j,a);
             } else {
                 add_scrap(map,i,j);
             }
@@ -40,7 +37,7 @@ void display_map(Map *map,char prbuff[],int print) {
     int y = map->worldSize;
     int seconds = (int)time(NULL);
     char buffer[2048] = {0};
-    strcat(buffer,"||====================================||\n");
+    strcat(buffer,"||====================================|| L F S ||\n");
     for (int j = 0; j < y; j++) { // iterate through
         strcat(buffer,"||"); // start line
         for (int i = 0; i < x; i++) {
@@ -50,9 +47,25 @@ void display_map(Map *map,char prbuff[],int print) {
             strcat(buffer, temp);// print with type character
             strcat(buffer," ");
         }
-        strcat(buffer,"||\n"); // new line at end of line
+        strcat(buffer,"|| ");
+        if (get_health(map) > j) {
+            strcat(buffer,"# ");
+        } else {
+            strcat(buffer,"  ");
+        }
+        if (get_fuel(map) > j) {
+            strcat(buffer,"* ");
+        } else {
+            strcat(buffer,"  ");
+        }
+        if (get_scrap(map) > j) {
+            strcat(buffer,"@ ");
+        } else {
+            strcat(buffer,"  ");
+        }
+        strcat(buffer,"||\n"); // end line
     }
-    strcat(buffer,"||====================================||\n");
+    strcat(buffer,"||====================================||=======||\n");
     strcat(buffer,prbuff);
     strcat(buffer,"                    \n");
     strcat(buffer,"                    \n");

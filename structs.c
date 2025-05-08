@@ -9,12 +9,19 @@
 void clear_space(Map *map, int i, int j) {
   map->world[i][j].contains = 0b000000;
 }
-void init_map(Map *map,int worldSize) {
+void init_map(Map *map,int worldSize,int fuelPerScrap,int startFuel,int startHealth,int scrapCount,int asteroidCount) {
     const char gear[] = "\xE2\x9A\x99";
+
+    map->fuelPerScrap = fuelPerScrap;
+    map->startFuel = startFuel;
+    map->startHealth = startHealth;
+    map->scrapCount = scrapCount;
+    map->asteroidCount = asteroidCount;
 
     worldSize = 18; // overwrite value
     map->worldSize = worldSize;
-    map->player.lives = 5;
+    map->player.lives = map->startHealth;
+    map->player.fuel = map->startFuel;
     map->player.scrap = 0;
     for (int i = 0; i < map->worldSize; i++) {
         for (int j = 0; j < map->worldSize; j++) {
@@ -37,7 +44,7 @@ void update_map(Map *map) {
 
         }
         if (has_scrap(map,i,j) && has_player(map,i,j)){
-            increase_scrap(map);
+            increase_fuel(map);
             remove_scrap(map,i,j);
         }
     }
@@ -122,7 +129,7 @@ void check_collision(Map *map) {
           set_health(map,get_health(map)-damage);
         }
         if (has_scrap(map,i,j)) {
-          increase_scrap(map);
+          increase_fuel(map);
           remove_scrap(map,i,j);
         }
       }
@@ -142,15 +149,19 @@ void move(Map *map,char prbuff[],char action) {
             if (action == 'w') {
               add_player(map,i,j-1);
               remove_player(map,i,j);
+              decrease_fuel(map);
             } else if (action == 'a') {
               add_player(map,i-1,j);
               remove_player(map,i,j);
+              decrease_fuel(map);
             } else if (action == 's') {
               add_player(map,i,j+1);
               remove_player(map,i,j);
+              decrease_fuel(map);
             } else if (action == 'd') {
               add_player(map,i+1,j);
               remove_player(map,i,j);
+              decrease_fuel(map);
             }
           }
           if (has_asteroid(&tempMap,i,j)) {
@@ -266,14 +277,15 @@ void set_health(Map *map, int health) {
 int get_health(Map *map) {
     return map->player.lives;
 }
-void increase_scrap(Map *map) {
+void increase_fuel(Map *map) {
+  map->player.fuel += map->fuelPerScrap;
   map->player.scrap++;
 }
-void decrease_scrap(Map *map) {
-  map->player.scrap--;
+void decrease_fuel(Map *map) {
+  map->player.fuel--;
 }
-void set_scrap(Map *map, int scrap) {
-  map->player.scrap = scrap;
+int get_fuel(Map *map) {
+  return map->player.fuel;
 }
 int get_scrap(Map *map) {
   return map->player.scrap;
