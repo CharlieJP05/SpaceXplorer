@@ -15,6 +15,7 @@
 
 typedef struct {
     int lives;
+    int fuel;
     int scrap;
 }Player;
 typedef struct {
@@ -26,11 +27,17 @@ typedef struct {
     int worldSize;
     Space world[18][18];
     Player player;
+    int fuelPerScrap; //1-any reccomend 5 or above, depends on scrap scarcity
+    int startFuel; //1-any, reccomend 5 or above
+    int startHealth; //1-any
+    int scrapCount; //0-100
+    int asteroidCount; //0-100
+    char difficulty[10];
 }Map;
 
 //update
 void clear_space(Map *map, int i, int j);
-void init_map(Map *map,int worldSize);
+void init_map(Map *map,int worldSize,int fuelPerScrap,int startFuel,int startHealth,int scrapCount,int asteroidCount);
 void update_map(Map *map);
 void update_symbols(Map *map,char prbuff[],int print);
 char show_overlap(Map *map, int i, int j,char prbuff[],int count);
@@ -54,8 +61,9 @@ void increase_health(Map *map);
 void decrease_health(Map *map);
 void set_health(Map *map, int health);
 int get_health(Map *map);
-void increase_scrap(Map *map);
-void decrease_scrap(Map *map);
+void increase_fuel(Map *map);
+void decrease_fuel(Map *map);
 void set_scrap(Map *map, int scrap);
+int get_fuel(Map *map);
 int get_scrap(Map *map);
 #endif //STRUCTS_H
