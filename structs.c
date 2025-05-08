@@ -6,6 +6,16 @@
 #include <windows.h>
 #include "structs.h"
 
+int get_map_scrap(Map *map) {
+  for (int i = 0; i < map->worldSize; i++) {
+    for (int j = 0; j < map->worldSize; j++) {
+      if (has_scrap(map,i,j)) {
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
 void clear_space(Map *map, int i, int j) {
   map->world[i][j].contains = 0b000000;
 }

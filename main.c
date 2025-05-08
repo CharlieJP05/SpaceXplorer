@@ -91,7 +91,7 @@ int main(void) {
         create_map(&map); // create map
         display_map(&map,"None",1); // show map
         spawn_asteroid(&map);
-        while (get_health(&map) > 0 && get_fuel(&map) > 0) {//main loop
+        while (get_health(&map) > 0 && get_fuel(&map) > 0 && get_map_scrap(&map)) {//main loop
             //Input
             char input = 0;
             while (_kbhit()) {
@@ -132,12 +132,22 @@ int main(void) {
         //################
         system("cls");
         printf("Game Over\n");
+        if (get_health(&map) > 0 && get_fuel(&map) > 0) {
+            printf("You Win!\n");
+        }
         printf("Your score: %d\n", get_scrap(&map));
         printf("Enter name to save: ");
         char name[10] = "";
         scanf("%s",name);
         printf("Saving...\n");
+        if (get_health(&map) > 0 && get_fuel(&map) > 0) {
+            char temp[10] = "!";
+            strcat(temp,name);
+            strcpy(name,temp);
+            strcat(name,"!");
+        }
         add("highscore.txt",name,map.difficulty,get_scrap(&map));
+
         
     }
     //##############

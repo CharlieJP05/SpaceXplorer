@@ -35,6 +35,7 @@ typedef struct {
     char difficulty[10];
 }Map;
 
+
 //update
 void clear_space(Map *map, int i, int j);
 void init_map(Map *map,int worldSize,int fuelPerScrap,int startFuel,int startHealth,int scrapCount,int asteroidCount);
@@ -43,6 +44,7 @@ void update_symbols(Map *map,char prbuff[],int print);
 char show_overlap(Map *map, int i, int j,char prbuff[],int count);
 void move(Map *map,char prbuff[],char action);
 //spaces
+int get_map_scrap(Map *map);
 void add_asteroid(Map *map, int i, int j,int direction);
 void add_scrap(Map *map, int i, int j);
 void add_player(Map *map, int i, int j);
