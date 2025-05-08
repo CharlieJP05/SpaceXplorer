@@ -95,7 +95,7 @@ int main(void) {
             //Input
             char input = 0;
             while (_kbhit()) {
-                _getch(); // Consume any lingering input
+                _getch(); // clear buffer
             }
 
             while (1) {
