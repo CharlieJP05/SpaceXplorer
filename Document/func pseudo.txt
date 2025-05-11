@@ -1,0 +1,3 @@
+open file in append
+print name, score and difficulty
+close file

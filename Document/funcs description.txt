@@ -1,0 +1,93 @@
+STRUCTS
+
+move
+iterates through each space and moves any asteroids/player in the direction they need to go. only moves player If WASD is pressed. function stores a temporary state of before any movement to reference whilst main map is being updated to stop any double movement (moves, checks next space, moves ect..)
+
+check collision
+iterates through each space and checks if it has asteroid and player, or player and scrap, if it has either pair, it either damages or gives player scrap+fuel depending on amount of asteroids or fuelPerScrap variable
+
+update symbols
+iterates though spaces and finds any space with multiple things in it and changes symbol to a number to reference to below the map. on even seconds it shows a number and odd second it shows an empty space to alert the user to the presence of multiple objects in one space
+
+show_overlap
+facilitates the use of number labels on the screen to reference spaces that have multiple objects on them. also modifies the print buffer to add the text references
+
+has scrap
+returns true if space contains scrap
+
+has player
+returns true if space contains player
+
+has asteroid
+returns true if space contains asteroid
+
+has asteroid dir
+returns true if space contains asteroid
+
+remove scrap
+removes scrap to the players scrap count
+
+remove player
+removes player from given space
+
+increase fuel
+increases fuel to the players fuel count
+
+decrease fuel
+decreases fuel in the players fuel count
+
+add player
+adds player to given space
+
+set health
+sets health of player to value
+
+get health
+returns value of health
+
+get scrap
+returns value of scrap
+
+get fuel
+returns value of fuel
+
+add scrap
+adds scrap to given space
+
+add asteroid
+adds asteroid to given space
+
+in map
+returns true if space is within boundaries
+
+FUNCS
+
+display map
+prints each space with padding on each side of space and on sides of map to make view look nicer. also prints lives, fuel and scrap to the right hand side of map. prints overlapping objects reference key below map
+
+create_map
+fills an empty map variable with various scrap depending on the difficulty setting
+
+spawn asteroid
+generates 1-2 asteroids at a random face and random position along the face
+
+hide cursor
+uses windows terminal code to hide cursor
+
+move cursor top left
+uses windows terminal code to move cursor top left
+
+FILES
+
+parse
+runs through given file and converts CSV to an array
+
+make
+creates a file of given name and adds default values to it depending on name
+
+add
+adds highscore to file
+
+MAIN
+main
+holds the main code of the program and calls the other functions. contains game loop and main menu code

@@ -40,11 +40,50 @@ include CMakeFiles/rules.ninja
 # Logical path to working directory; prefix for absolute paths.
 
 cmake_ninja_workdir = E$:/Git/SpaceXplorer/cmake-build-debug/
+# =============================================================================
+# Object build statements for EXECUTABLE target SpaceXplorer
+
 
 #############################################
-# Utility command for custom_build
+# Order-only phony target for SpaceXplorer
 
-build custom_build: phony CMakeFiles/custom_build
+build cmake_object_order_depends_target_SpaceXplorer: phony || .
+
+build CMakeFiles/SpaceXplorer.dir/main.c.obj: C_COMPILER__SpaceXplorer_unscanned_Debug E$:/Git/SpaceXplorer/main.c || cmake_object_order_depends_target_SpaceXplorer
+  DEP_FILE = CMakeFiles\SpaceXplorer.dir\main.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\SpaceXplorer.dir
+  OBJECT_FILE_DIR = CMakeFiles\SpaceXplorer.dir
+
+build CMakeFiles/SpaceXplorer.dir/funcs.c.obj: C_COMPILER__SpaceXplorer_unscanned_Debug E$:/Git/SpaceXplorer/funcs.c || cmake_object_order_depends_target_SpaceXplorer
+  DEP_FILE = CMakeFiles\SpaceXplorer.dir\funcs.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\SpaceXplorer.dir
+  OBJECT_FILE_DIR = CMakeFiles\SpaceXplorer.dir
+
+build CMakeFiles/SpaceXplorer.dir/structs.c.obj: C_COMPILER__SpaceXplorer_unscanned_Debug E$:/Git/SpaceXplorer/structs.c || cmake_object_order_depends_target_SpaceXplorer
+  DEP_FILE = CMakeFiles\SpaceXplorer.dir\structs.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\SpaceXplorer.dir
+  OBJECT_FILE_DIR = CMakeFiles\SpaceXplorer.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target SpaceXplorer
+
+
+#############################################
+# Link the executable SpaceXplorer.exe
+
+build SpaceXplorer.exe: C_EXECUTABLE_LINKER__SpaceXplorer_Debug CMakeFiles/SpaceXplorer.dir/main.c.obj CMakeFiles/SpaceXplorer.dir/funcs.c.obj CMakeFiles/SpaceXplorer.dir/structs.c.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\SpaceXplorer.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = SpaceXplorer.exe
+  TARGET_IMPLIB = libSpaceXplorer.dll.a
+  TARGET_PDB = SpaceXplorer.exe.dbg
 
 
 #############################################
@@ -69,16 +108,10 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
-
-#############################################
-# Custom command for CMakeFiles\custom_build
-
-build CMakeFiles/custom_build | ${cmake_ninja_workdir}CMakeFiles/custom_build: CUSTOM_COMMAND
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D E:\Git\SpaceXplorer && E:\Git\SpaceXplorer\build.sh"
-  DESC = Running custom build script...
-
 # =============================================================================
 # Target aliases.
+
+build SpaceXplorer: phony SpaceXplorer.exe
 
 # =============================================================================
 # Folder targets.
@@ -88,7 +121,7 @@ build CMakeFiles/custom_build | ${cmake_ninja_workdir}CMakeFiles/custom_build: C
 #############################################
 # Folder: E:/Git/SpaceXplorer/cmake-build-debug
 
-build all: phony
+build all: phony SpaceXplorer.exe
 
 # =============================================================================
 # Built-in targets
